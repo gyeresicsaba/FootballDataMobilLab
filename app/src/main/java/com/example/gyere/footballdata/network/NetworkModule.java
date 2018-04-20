@@ -1,25 +1,41 @@
 package com.example.gyere.footballdata.network;
 
+import com.example.gyere.footballdata.util.GsonHelper;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 public class NetworkModule {
+
     @Provides
     @Singleton
-    public Retrofit.Builder provideRetrofit() {
-        return new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create());
+    public OkHttpClient.Builder provideOkHttpClientBuilder() {
+        return new OkHttpClient().newBuilder();
+    }
 
+
+    @Provides
+    @Singleton
+    public OkHttpClient provideOkHttpClient(OkHttpClient.Builder builder) {
+        return builder.build();
     }
 
     @Provides
     @Singleton
-    public TeamsApi provideArtistsApi(Retrofit.Builder retrofitBuilder) {
-        return retrofitBuilder.baseUrl(NetworkConfig.ENDPOINT_ADDRESS).build().create(TeamsApi.class);
+    public Retrofit provideRetrofit(OkHttpClient client) {
+        return new Retrofit.Builder().baseUrl(NetworkConfig.ENDPOINT_ADDRESS).client(client)
+                .addConverterFactory(GsonConverterFactory.create(GsonHelper.getGson())).build();
+    }
+
+    @Provides
+    @Singleton
+    public TeamApi provideTeamApi(Retrofit retrofit) {
+        return retrofit.create(TeamApi.class);
     }
 }

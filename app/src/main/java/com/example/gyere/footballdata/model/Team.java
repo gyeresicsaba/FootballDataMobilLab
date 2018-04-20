@@ -1,10 +1,44 @@
 package com.example.gyere.footballdata.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Team {
-    private String name;
-    private String shortName;
-    private String squadMarketValue;
-    private String crestUrl;
+
+    @SerializedName("id")
+    private Long id = null;
+
+    @SerializedName("name")
+    private String name = null;
+
+    @SerializedName("shortName")
+    private String shortName = null;
+
+    @SerializedName("squadMarketValue")
+    private String squadMarketValue = null;
+
+    @SerializedName("crestUrl")
+    private String crestUrl = null;
+
+    @SerializedName("playersUrl")
+    private String playersUrl = null;
+
+
+    public Team() {
+
+    }
+
+    public Team(Long id, String name, String shortName, String squadMarketValue, String crestUrl,
+                String playersUrl) {
+
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -36,5 +70,39 @@ public class Team {
 
     public void setCrestUrl(String crestUrl) {
         this.crestUrl = crestUrl;
+    }
+
+    public String getPlayersUrl() {
+        return playersUrl;
+    }
+
+    public void setPlayersUrl(String playersUrl) {
+        this.playersUrl = playersUrl;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("class Team {\n");
+
+        sb.append("    id: ").append(toIndentedString(id)).append("\n");
+        sb.append("    name: ").append(toIndentedString(name)).append("\n");
+        sb.append("    shortName: ").append(toIndentedString(shortName)).append("\n");
+        sb.append("    squadMarketValue: ").append(toIndentedString(squadMarketValue)).append("\n");
+        sb.append("    crestUrl: ").append(toIndentedString(crestUrl)).append("\n");
+        sb.append("    playersUrl: ").append(toIndentedString(playersUrl)).append("\n");
+        sb.append("}");
+        return sb.toString();
+    }
+
+    /**
+     * Convert the given object to string with each line indented by 4 spaces
+     * (except the first line).
+     */
+    private String toIndentedString(Object o) {
+        if (o == null) {
+            return "null";
+        }
+        return o.toString().replace("\n", "\n    ");
     }
 }

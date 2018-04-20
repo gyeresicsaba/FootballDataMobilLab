@@ -11,8 +11,8 @@ public class FootballDataApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-//        injector = DaggerFootballDataApplication.builder()
-//                .uIModule(new UIModule(this)).build();
+        injector = DaggerFootballDataApplication.builder()
+                .uIModule(new UIModule(this)).build();
     }
 
 }

@@ -3,6 +3,7 @@ package com.example.gyere.footballdata.ui;
 import android.content.Context;
 
 import com.example.gyere.footballdata.di.Network;
+import com.example.gyere.footballdata.ui.details.DetailsPresenter;
 import com.example.gyere.footballdata.ui.main.MainPresenter;
 
 import java.util.concurrent.Executor;
@@ -32,11 +33,11 @@ public class UIModule {
         return new MainPresenter();
     }
 
-//    @Provides
-//    @Singleton
-//    public ArtistsPresenter provideArtistsPresenter() {
-//        return new ArtistsPresenter();
-//    }
+    @Provides
+    @Singleton
+    public DetailsPresenter provideDetailsPresenter() {
+        return new DetailsPresenter();
+    }
 
     @Provides
     @Singleton
