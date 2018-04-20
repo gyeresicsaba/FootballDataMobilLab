@@ -19,7 +19,7 @@ public class TeamInteractor {
     Repository repository;
 
     public TeamInteractor() {
-        injector.inject(this);
+//        injector.inject(this);
     }
 
     public void getTeams() {
