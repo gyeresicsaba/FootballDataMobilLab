@@ -6,6 +6,8 @@ import com.example.gyere.footballdata.di.Network;
 import com.example.gyere.footballdata.ui.details.DetailsPresenter;
 import com.example.gyere.footballdata.ui.main.MainPresenter;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -37,6 +39,12 @@ public class UIModule {
     @Singleton
     public DetailsPresenter provideDetailsPresenter() {
         return new DetailsPresenter();
+    }
+
+    @Provides
+    @Singleton
+    public EventBus provideEventBus() {
+        return EventBus.getDefault();
     }
 
     @Provides

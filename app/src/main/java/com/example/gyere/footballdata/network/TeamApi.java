@@ -1,6 +1,7 @@
 package com.example.gyere.footballdata.network;
 
 import com.example.gyere.footballdata.model.Team;
+import com.example.gyere.footballdata.model.TeamsResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -77,7 +78,7 @@ public interface TeamApi {
      */
 
     @GET("teams")
-    Call<Void> getTeams(
+    Call<TeamsResponse> getTeams(
             @Header("api_key") String apiKey
     );
 

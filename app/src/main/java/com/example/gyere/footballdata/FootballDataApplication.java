@@ -5,14 +5,13 @@ import android.app.Application;
 import com.example.gyere.footballdata.ui.UIModule;
 
 public class FootballDataApplication extends Application {
-    public static FootballDataApplication injector;
+    public static FootballDataApplicationComponent injector;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-//        injector = DaggerFootballDataApplication.builder()
-//                .uIModule(new UIModule(this)).build();
+        injector = DaggerFootballDataApplicationComponent.builder()
+                .uIModule(new UIModule(this)).build();
     }
-
 }

@@ -1,9 +1,13 @@
 package com.example.gyere.footballdata.interactor.Team;
 
+import com.example.gyere.footballdata.FootballDataApplication;
 import com.example.gyere.footballdata.interactor.Team.Events.GetTeamEvent;
 import com.example.gyere.footballdata.interactor.Team.Events.RemoveTeamEvent;
 import com.example.gyere.footballdata.interactor.Team.Events.SaveTeamEvent;
 import com.example.gyere.footballdata.model.Team;
+import com.example.gyere.footballdata.model.TeamsResponse;
+import com.example.gyere.footballdata.network.NetworkConfig;
+import com.example.gyere.footballdata.network.TeamApi;
 import com.example.gyere.footballdata.repository.Repository;
 
 import org.greenrobot.eventbus.EventBus;
@@ -12,25 +16,35 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import retrofit2.Call;
+import retrofit2.Response;
+
 public class TeamInteractor {
-    @Inject
-    EventBus bus;
+
     @Inject
     Repository repository;
+    @Inject
+    TeamApi teamApi;
 
     public TeamInteractor() {
-//        injector.inject(this);
+        FootballDataApplication.injector.inject(this);
     }
 
     public void getTeams() {
         GetTeamEvent event = new GetTeamEvent();
         try {
-            List<Team> teams = repository.getTeams();
-            event.setTeam(teams);
-            bus.post(event);
+            Call<TeamsResponse> teamsCall = teamApi.getTeams(NetworkConfig.AUTH_TOKEN);
+            Response<TeamsResponse> response = teamsCall.execute();
+            if (response.code() != 200) {
+                throw new Exception("Result code is not 200");
+            }
+            event.setCode(response.code());
+            System.out.println(response.body());
+            event.setTeam(response.body().getTeams());
+            EventBus.getDefault().post(event);
         } catch (Exception e) {
             event.setThrowable(e);
-            bus.post(event);
+            EventBus.getDefault().post(event);
         }
     }
 
@@ -40,10 +54,10 @@ public class TeamInteractor {
         try {
             repository.saveTeam(team);
             //Currently don't care about network sync problems
-            bus.post(event);
+            EventBus.getDefault().post(event);
         } catch (Exception e) {
             event.setThrowable(e);
-            bus.post(event);
+            EventBus.getDefault().post(event);
         }
     }
 
@@ -60,10 +74,10 @@ public class TeamInteractor {
         event.setTeam(team);
         try {
             repository.removeTeam(team);
-            bus.post(event);
+            EventBus.getDefault().post(event);
         } catch (Exception e) {
             event.setThrowable(e);
-            bus.post(event);
+            EventBus.getDefault().post(event);
         }
     }
 }

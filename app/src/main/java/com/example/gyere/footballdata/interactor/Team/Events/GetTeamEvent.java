@@ -1,6 +1,7 @@
 package com.example.gyere.footballdata.interactor.Team.Events;
 
 import com.example.gyere.footballdata.model.Team;
+import com.example.gyere.footballdata.model.TeamsResponse;
 
 import java.util.List;
 

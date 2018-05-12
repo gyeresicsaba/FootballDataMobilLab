@@ -1,20 +1,61 @@
 package com.example.gyere.footballdata.ui.main;
 
+import com.example.gyere.footballdata.FootballDataApplication;
+import com.example.gyere.footballdata.di.Network;
+import com.example.gyere.footballdata.interactor.Team.Events.GetTeamEvent;
+import com.example.gyere.footballdata.interactor.Team.TeamInteractor;
 import com.example.gyere.footballdata.ui.Presenter;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.concurrent.Executor;
+
+import javax.inject.Inject;
+
 public class MainPresenter extends Presenter<MainScreen> {
+
+    @Inject
+    @Network
+    Executor networkExecutor;
+
+    @Inject
+    TeamInteractor teamInteractor;
 
     @Override
     public void attachScreen(MainScreen screen) {
         super.attachScreen(screen);
+        FootballDataApplication.injector.inject(this);
+        EventBus.getDefault().register(this);
     }
 
     @Override
     public void detachScreen() {
+        EventBus.getDefault().unregister(this);
         super.detachScreen();
     }
 
     public void showTeams() {
-        screen.showTeams();
+        networkExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                teamInteractor.getTeams();
+            }
+        });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(final GetTeamEvent event) {
+        if (event.getThrowable() != null) {
+            event.getThrowable().printStackTrace();
+            if (screen != null) {
+//                screen.showNetworkError(event.getThrowable().getMessage());
+            }
+        } else {
+            if (screen != null) {
+                screen.showTeams(event.getTeam());
+            }
+        }
     }
 }
