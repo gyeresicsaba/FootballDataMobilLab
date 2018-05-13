@@ -54,7 +54,6 @@ public class DetailsPresenter extends Presenter<DetailsScreen> {
             }
         } else {
             if (screen != null) {
-                //repository.saveSession(event.getSpellData());
                 screen.showDetails(event.getTeam());
             }
         }

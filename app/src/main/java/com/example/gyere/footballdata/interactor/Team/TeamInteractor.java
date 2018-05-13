@@ -42,7 +42,7 @@ public class TeamInteractor {
             } else {
                 event.setCode(response.code());
                 event.setTeam(response.body().getTeams());
-                repository.updateTeams(response.body().getTeams());
+//                repository.updateTeams(response.body().getTeams());
             }
             EventBus.getDefault().post(event);
         } catch (Exception e) {

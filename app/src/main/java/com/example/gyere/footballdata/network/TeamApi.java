@@ -77,7 +77,7 @@ public interface TeamApi {
      * @return Call<Void>
      */
 
-    @GET("competitions/399/teams")
+    @GET("competitions/398/teams")
     Call<TeamsResponse> getTeams(
             @Header("api_key") String apiKey
     );
