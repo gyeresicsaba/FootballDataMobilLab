@@ -8,9 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gyere.footballdata.FootballDataApplication;
@@ -19,7 +17,6 @@ import com.example.gyere.footballdata.model.Team;
 import com.example.gyere.footballdata.model.TeamsResponse;
 
 import java.util.List;
-import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
 
@@ -27,8 +24,6 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
 
     @Inject
     MainPresenter mainPresenter;
-
-    TextView textView;
 
     private TeamsResponse teamsResponse;
     private RecyclerView recyclerView;
@@ -43,12 +38,12 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
 
         FootballDataApplication.injector.inject(this);
 
-        teamsResponse = new TeamsResponse();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(llm);
 
+        teamsResponse = new TeamsResponse();
         teamsAdapter = new TeamsAdapter(this, teamsResponse);
         recyclerView.setAdapter(teamsAdapter);
 
@@ -59,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
                 mainPresenter.showTeams();
             }
         });
-        ;
 
         teamsAdapter.setClickListener(new TeamsAdapter.ItemClickListener() {
             @Override
@@ -84,17 +78,15 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                mainPresenter.showTeams();
-                textView.setText("dsadsa");
             }
         });
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         mainPresenter.attachScreen(this);
+        mainPresenter.showTeams();
     }
 
     @Override
@@ -105,6 +97,11 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
 
     @Override
     public void showTeams(List<Team> teams) {
-        this.textView.setText(teams.toString());
+        System.out.println(teams);
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
+        teamsResponse.setTeams(teams);
+        teamsAdapter.notifyDataSetChanged();
     }
 }

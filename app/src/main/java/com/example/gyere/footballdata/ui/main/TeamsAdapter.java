@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.gyere.footballdata.R;
 import com.example.gyere.footballdata.model.Team;
 import com.example.gyere.footballdata.model.TeamsResponse;
@@ -32,7 +33,9 @@ public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-//        hol
+        Team team = teamsResponse.getTeams().get(position);
+        Glide.with(context).load(team.getCrestUrl()).into(holder.ivImage);
+        holder.tvName.setText(team.getName());
     }
 
     @Override
@@ -43,15 +46,12 @@ public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.ViewHolder> 
     protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView ivImage;
         public TextView tvName;
-        public TextView tvPopularity;
 
         public ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            //ivImage = (ImageView) itemView.findViewById(R.id.);
-//            tvName = (TextView) itemView.findViewById(R.id.tvName);
-            //tvPopularity = (TextView) itemView.findViewById(R.id.tvPopularity);
-
+            ivImage = (ImageView) itemView.findViewById(R.id.ivImage);
+            tvName = (TextView) itemView.findViewById(R.id.tvName);
         }
 
         @Override
