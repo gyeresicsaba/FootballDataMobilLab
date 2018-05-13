@@ -13,7 +13,6 @@ public class TeamsResponse   {
     @SerializedName("teams")
     private List<Team> teams = new ArrayList<Team>();
 
-
     public Integer getCount() {
         return count;
     }

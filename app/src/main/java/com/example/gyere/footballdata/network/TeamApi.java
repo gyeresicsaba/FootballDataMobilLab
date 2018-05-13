@@ -35,9 +35,9 @@ public interface TeamApi {
      * @return Call<Team>
      */
 
-    @GET("team/{teamId}")
+    @GET("teams/{teamId}")
     Call<Team> getTeamById(
-            @Path("teamId") Long teamId, @Header("api_key") String apiKey
+            @Path("teamId") int teamId, @Header("api_key") String apiKey
     );
 
 
@@ -77,7 +77,7 @@ public interface TeamApi {
      * @return Call<Void>
      */
 
-    @GET("teams")
+    @GET("competitions/399/teams")
     Call<TeamsResponse> getTeams(
             @Header("api_key") String apiKey
     );

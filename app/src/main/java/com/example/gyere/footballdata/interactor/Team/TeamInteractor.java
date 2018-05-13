@@ -1,6 +1,7 @@
 package com.example.gyere.footballdata.interactor.Team;
 
 import com.example.gyere.footballdata.FootballDataApplication;
+import com.example.gyere.footballdata.interactor.Team.Events.GetTeamDetailsEvent;
 import com.example.gyere.footballdata.interactor.Team.Events.GetTeamEvent;
 import com.example.gyere.footballdata.interactor.Team.Events.RemoveTeamEvent;
 import com.example.gyere.footballdata.interactor.Team.Events.SaveTeamEvent;
@@ -36,11 +37,30 @@ public class TeamInteractor {
             Call<TeamsResponse> teamsCall = teamApi.getTeams(NetworkConfig.AUTH_TOKEN);
             Response<TeamsResponse> response = teamsCall.execute();
             if (response.code() != 200) {
+                event.setTeam(repository.getTeams());
+//                throw new Exception("Result code is not 200");
+            } else {
+                event.setCode(response.code());
+                event.setTeam(response.body().getTeams());
+                repository.updateTeams(response.body().getTeams());
+            }
+            EventBus.getDefault().post(event);
+        } catch (Exception e) {
+            event.setThrowable(e);
+            EventBus.getDefault().post(event);
+        }
+    }
+
+    public void getTeam(int id) {
+        GetTeamDetailsEvent event = new GetTeamDetailsEvent();
+        try {
+            Call<Team> teamCall = teamApi.getTeamById(id, NetworkConfig.AUTH_TOKEN);
+            Response<Team> response = teamCall.execute();
+            if (response.code() != 200) {
                 throw new Exception("Result code is not 200");
             }
             event.setCode(response.code());
-            System.out.println(response.body());
-            event.setTeam(response.body().getTeams());
+            event.setTeam(response.body());
             EventBus.getDefault().post(event);
         } catch (Exception e) {
             event.setThrowable(e);

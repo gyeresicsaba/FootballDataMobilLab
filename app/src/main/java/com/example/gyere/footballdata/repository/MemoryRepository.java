@@ -14,8 +14,8 @@ public class MemoryRepository implements Repository {
 
     @Override
     public void open(Context context) {
-        Team team1 = new Team(1L, "Manchester United", "ManU", "33333", "crestUrl", "playersUrl");
-        Team team2 = new Team(1L, "Real Madrid", "RM", "33333", "crestUrl", "playersUrl");
+        Team team1 = new Team(1, "Manchester United", "ManU", "33333", "crestUrl", "playersUrl");
+        Team team2 = new Team(1, "Real Madrid", "RM", "33333", "crestUrl", "playersUrl");
 
         teams = new ArrayList<>();
         teams.add(team1);
@@ -42,7 +42,7 @@ public class MemoryRepository implements Repository {
         for (int i = 0; i < this.teams.size(); i++) {
             Team myTeam = this.teams.get(i);
             for (Team team : teams) {
-                if (team.getId().equals(myTeam.getId())) {
+                if (team.getId() == myTeam.getId()) {
                     this.teams.set(i, team);
                 }
             }

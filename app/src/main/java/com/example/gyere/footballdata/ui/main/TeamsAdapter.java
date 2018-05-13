@@ -34,7 +34,9 @@ public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Team team = teamsResponse.getTeams().get(position);
-        Glide.with(context).load(team.getCrestUrl()).into(holder.ivImage);
+        if (!team.getCrestUrl().endsWith("svg")) {
+            Glide.with(context).load(team.getCrestUrl()).into(holder.ivImage);
+        }
         holder.tvName.setText(team.getName());
     }
 

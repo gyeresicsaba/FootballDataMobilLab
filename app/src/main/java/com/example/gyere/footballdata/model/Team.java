@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public class Team {
 
     @SerializedName("id")
-    private Long id = null;
+    private int id;
 
     @SerializedName("name")
     private String name = null;
@@ -27,16 +27,16 @@ public class Team {
 
     }
 
-    public Team(Long id, String name, String shortName, String squadMarketValue, String crestUrl,
+    public Team(int id, String name, String shortName, String squadMarketValue, String crestUrl,
                 String playersUrl) {
 
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -85,7 +85,7 @@ public class Team {
         StringBuilder sb = new StringBuilder();
         sb.append("class Team {\n");
 
-        sb.append("    id: ").append(toIndentedString(id)).append("\n");
+        sb.append("    id: ").append(id).append("\n");
         sb.append("    name: ").append(toIndentedString(name)).append("\n");
         sb.append("    shortName: ").append(toIndentedString(shortName)).append("\n");
         sb.append("    squadMarketValue: ").append(toIndentedString(squadMarketValue)).append("\n");

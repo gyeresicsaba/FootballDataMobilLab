@@ -9,12 +9,12 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.gyere.footballdata.FootballDataApplication;
 import com.example.gyere.footballdata.R;
 import com.example.gyere.footballdata.model.Team;
 import com.example.gyere.footballdata.model.TeamsResponse;
+import com.example.gyere.footballdata.ui.details.DetailsActivity;
 
 import java.util.List;
 
@@ -58,17 +58,16 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
         teamsAdapter.setClickListener(new TeamsAdapter.ItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(getApplicationContext(), "You clicked " + teamsAdapter.getItem(position).getName() + " on row number " + position, Toast.LENGTH_SHORT).show();
-
 //                Bundle bundle = new Bundle();
 //                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(position));
 //                List<NameUrl> list = spellsList.getResult();
 //                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, list.get(position).getName());
 //                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 //
-//                Intent intent = new Intent(MainListActivity.this, DeatailsActivity.class);
-//                intent.putExtra(KEY_URL, teamsAdapter.getItem(position).getUrl());
-//                startActivity(intent);
+                System.out.println(teamsAdapter.getItem(position).getId());
+                Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+                intent.putExtra("Key_id", "66");
+                startActivity(intent);
             }
         });
 

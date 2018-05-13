@@ -36,7 +36,7 @@ public class SugarOrmRepository implements Repository {
         List<Team> toUpdate = new ArrayList<>(myTeams.size());
         for (Team myTeam : myTeams) {
             for (Team team : teams) {
-                if (team.getId().equals(myTeam.getId())) {
+                if (team.getId() == myTeam.getId()) {
                     toUpdate.add(team);
                 }
             }
