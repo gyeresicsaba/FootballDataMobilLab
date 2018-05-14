@@ -2,7 +2,9 @@ package com.example.gyere.footballdata.ui.main;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -45,13 +47,14 @@ public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.ViewHolder> 
         return teamsResponse.getTeams().size();
     }
 
-    protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
         public ImageView ivImage;
         public TextView tvName;
 
         public ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
+            itemView.setOnCreateContextMenuListener(this);
             ivImage = (ImageView) itemView.findViewById(R.id.ivImage);
             tvName = (TextView) itemView.findViewById(R.id.tvName);
         }
@@ -60,6 +63,20 @@ public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.ViewHolder> 
         public void onClick(View view) {
             if (itemClickListener != null)
                 itemClickListener.onItemClick(view, getAdapterPosition());
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v,
+                                        ContextMenu.ContextMenuInfo menuInfo) {
+
+            menu.setHeaderTitle("Select The Action");
+            menu.add(0, v.getId(), 0, "Delete").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    System.out.println("delete" + item.getItemId());
+                    return true;
+                }
+            });
         }
     }
 

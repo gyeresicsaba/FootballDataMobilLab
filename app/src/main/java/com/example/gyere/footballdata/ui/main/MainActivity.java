@@ -15,6 +15,8 @@ import com.example.gyere.footballdata.R;
 import com.example.gyere.footballdata.model.Team;
 import com.example.gyere.footballdata.model.TeamsResponse;
 import com.example.gyere.footballdata.ui.details.DetailsActivity;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.crash.FirebaseCrash;
 
 import java.util.List;
 
@@ -22,7 +24,7 @@ import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity implements MainScreen {
 
-//    private FirebaseAnalytics mFirebaseAnalytics;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Inject
     MainPresenter mainPresenter;
@@ -37,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         FootballDataApplication.injector.inject(this);
 
@@ -60,12 +64,12 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
         teamsAdapter.setClickListener(new TeamsAdapter.ItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-//                Bundle bundle = new Bundle();
-//                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(position));
-//                List<NameUrl> list = spellsList.getResult();
-//                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, list.get(position).getName());
-//                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-//
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(position));
+                List<Team> list = teamsResponse.getTeams();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, list.get(position).getName());
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 System.out.println(teamsAdapter.getItem(position).getId());
                 Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
                 intent.putExtra("Key_id", "66");
@@ -81,6 +85,8 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
                         .setAction("Action", null).show();
             }
         });
+
+        FirebaseCrash.log("Activity created");
     }
 
     @Override

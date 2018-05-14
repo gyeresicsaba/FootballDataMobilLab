@@ -1,5 +1,7 @@
 package com.example.gyere.footballdata.interactor.Team;
 
+import android.util.Log;
+
 import com.example.gyere.footballdata.FootballDataApplication;
 import com.example.gyere.footballdata.interactor.Team.Events.GetTeamDetailsEvent;
 import com.example.gyere.footballdata.interactor.Team.Events.GetTeamEvent;
@@ -10,6 +12,7 @@ import com.example.gyere.footballdata.model.TeamsResponse;
 import com.example.gyere.footballdata.network.NetworkConfig;
 import com.example.gyere.footballdata.network.TeamApi;
 import com.example.gyere.footballdata.repository.Repository;
+import com.google.firebase.crash.FirebaseCrash;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -19,6 +22,8 @@ import javax.inject.Inject;
 
 import retrofit2.Call;
 import retrofit2.Response;
+
+import static com.crashlytics.android.Crashlytics.TAG;
 
 public class TeamInteractor {
 
@@ -46,6 +51,8 @@ public class TeamInteractor {
             }
             EventBus.getDefault().post(event);
         } catch (Exception e) {
+            FirebaseCrash.logcat(Log.ERROR, TAG, "No internet exeption!");
+            FirebaseCrash.report(e);
             event.setThrowable(e);
             EventBus.getDefault().post(event);
         }
