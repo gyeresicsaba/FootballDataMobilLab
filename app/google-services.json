@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "79781588701",
+    "firebase_url": "https://mobillab-757f6.firebaseio.com",
+    "project_id": "mobillab-757f6",
+    "storage_bucket": "mobillab-757f6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:79781588701:android:d147ce08bca98ae8",
+        "android_client_info": {
+          "package_name": "com.example.gyere.footballdata"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "79781588701-luu4mml5r7vit2km1mu2k4567d540vsr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gyere.footballdata",
+            "certificate_hash": "ff45c4d8ad365ba3da6c750d00f21446e6edfdc3"
+          }
+        },
+        {
+          "client_id": "79781588701-t7p7nfcuib5a4jjl99scclq5q62dafjg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADp4Bp6IXVYeHgSiRi2BefuxdzH9jjCyU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "79781588701-t7p7nfcuib5a4jjl99scclq5q62dafjg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -22,6 +22,8 @@ import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity implements MainScreen {
 
+//    private FirebaseAnalytics mFirebaseAnalytics;
+
     @Inject
     MainPresenter mainPresenter;
 
